@@ -9,19 +9,19 @@
 /* Begin PBXBuildFile section */
 		B766D0A31C432594005312A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B766D0A21C432594005312A0 /* AppDelegate.swift */; };
 		B766D0A51C432594005312A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B766D0A41C432594005312A0 /* ViewController.swift */; };
-		B766D0A81C432594005312A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B766D0A61C432594005312A0 /* Main.storyboard */; };
 		B766D0AA1C432594005312A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B766D0A91C432594005312A0 /* Assets.xcassets */; };
 		B766D0AD1C432594005312A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B766D0AB1C432594005312A0 /* LaunchScreen.storyboard */; };
+		B7A86A8F1C53100600285147 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A86A8E1C53100600285147 /* Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B766D09F1C432594005312A0 /* CO2Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CO2Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B766D0A21C432594005312A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B766D0A41C432594005312A0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B766D0A71C432594005312A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B766D0A91C432594005312A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B766D0AC1C432594005312A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B766D0AE1C432594005312A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B7A86A8E1C53100600285147 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +56,7 @@
 			children = (
 				B766D0A21C432594005312A0 /* AppDelegate.swift */,
 				B766D0A41C432594005312A0 /* ViewController.swift */,
-				B766D0A61C432594005312A0 /* Main.storyboard */,
+				B7A86A8E1C53100600285147 /* Settings.swift */,
 				B766D0A91C432594005312A0 /* Assets.xcassets */,
 				B766D0AB1C432594005312A0 /* LaunchScreen.storyboard */,
 				B766D0AE1C432594005312A0 /* Info.plist */,
@@ -124,7 +124,6 @@
 			files = (
 				B766D0AD1C432594005312A0 /* LaunchScreen.storyboard in Resources */,
 				B766D0AA1C432594005312A0 /* Assets.xcassets in Resources */,
-				B766D0A81C432594005312A0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +134,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7A86A8F1C53100600285147 /* Settings.swift in Sources */,
 				B766D0A51C432594005312A0 /* ViewController.swift in Sources */,
 				B766D0A31C432594005312A0 /* AppDelegate.swift in Sources */,
 			);
@@ -143,14 +143,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B766D0A61C432594005312A0 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B766D0A71C432594005312A0 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B766D0AB1C432594005312A0 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -253,6 +245,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.shleeconsulting.CO2Calculator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -264,6 +257,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.shleeconsulting.CO2Calculator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -286,6 +280,7 @@
 				B766D0B31C432594005312A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
