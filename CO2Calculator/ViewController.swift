@@ -125,7 +125,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func segSwitchSet(){
     
         // セグメントに設定するボタンを配列で作成
-        let array : NSArray = ["有料","無料","全て"]
+        let array : NSArray = ["1","2","3"]
         let segSwitch: UISegmentedControl = UISegmentedControl(items: array as [AnyObject])
         segSwitch.frame = CGRectMake(segSwitchMargin, segSwitchStartPosition, segSwitchWidth, segSwitchHeight)
         segSwitch.selectedSegmentIndex = 0
