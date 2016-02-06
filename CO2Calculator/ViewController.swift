@@ -154,26 +154,25 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     func displayPanelCreate(){
         
-        let panelMargin:CGFloat  = 2.0
+        let panelMargin:CGFloat  = 10.0
         let panelWidth:CGFloat   = screenWidth - panelMargin * 2.0
         let panelHeight:CGFloat  = segSwitchStartPosition - panelMargin * 2 - co2ButtonHeight * 2 - co2ButtonMargin * 2 - statusBarHeight
-        let panelStartPosition:CGFloat = co2ButtonHeight * 2 + co2ButtonMargin * 3 + panelMargin + statusBarHeight
-        
+        let panelStartPosition:CGFloat = co2ButtonHeight * 2 + co2ButtonMargin * 2 + panelMargin + statusBarHeight
         let panelFrame:CGRect = CGRectMake(panelMargin, panelStartPosition, panelWidth, panelHeight)
+        let panelFont = UIFont(name:"HelveticaNeue-Light",size:panelMargin)
 
-        let displayPanel: UITextView = UITextView(frame:panelFrame)
-        displayPanel.backgroundColor = UIColor.lightGrayColor()
-        displayPanel.text = "1234567890abcdefghijklmnopqrstuwxyz 1234567890 abcdefghijklmnopqrstuwxyz \na\nb\nc\ndefghijklmnopqrstuwxyz"
-        //displayPanel.layer.masksToBounds = true
-        //displayPanel.layer.cornerRadius = 20.0
-        //displayPanel.layer.borderWidth = 1
-        //displayPanel.layer.borderColor = UIColor.blackColor().CGColor
+        let displayPanel: UILabel = UILabel(frame:panelFrame)
+        displayPanel.backgroundColor = UIColor.darkGrayColor()
+        displayPanel.text = "1234567890"
+        displayPanel.layer.masksToBounds = true
+        displayPanel.layer.cornerRadius = 10.0
+        displayPanel.font = panelFont
+        displayPanel.layer.borderWidth = 1
+        displayPanel.layer.borderColor = UIColor.lightGrayColor().CGColor
         displayPanel.font = UIFont.systemFontOfSize(CGFloat(20))
-        displayPanel.textColor = UIColor.blackColor()
+        displayPanel.textColor = UIColor.whiteColor()
         displayPanel.textAlignment = NSTextAlignment.Left
-        displayPanel.dataDetectorTypes = UIDataDetectorTypes.All
-        displayPanel.layer.shadowOpacity = 0.5
-        displayPanel.editable = false
+        //displayPanel.layer.shadowOpacity = 0.5
         self.view.addSubview(displayPanel)
 
     }
@@ -235,8 +234,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         self.calculateButtonStartHeight + self.calculateButtonHeight*CGFloat(h) + self.calculateButtonMargin*CGFloat(h),
                         self.calculateButtonWidth, self.calculateButtonHeight)
                     
-                    self.displayPanelCreate()
-                    
                 })
             
             }
@@ -272,6 +269,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.buttonCreate()
         self.decimalPadCreate()
         self.segSwitchSet()
+        self.displayPanelCreate()
     
     }
 
