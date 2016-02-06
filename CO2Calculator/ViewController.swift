@@ -8,7 +8,7 @@
 
 import UIKit
 
-/*UIButtonのハイライト
+/*UIButton HighLight
 extension UIButton {
     private func imageWithColor(color: UIColor) -> UIImage {
         let rect = CGRectMake(0.0, 0.0, 1.0, 1.0)
@@ -151,23 +151,23 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    /*
+    
     func displayPanelCreate(){
         
-        let panelMargin:CGFloat  = 12.0
+        let panelMargin:CGFloat  = 2.0
         let panelWidth:CGFloat   = screenWidth - panelMargin * 2.0
-        let panelHeight:CGFloat  =
+        let panelHeight:CGFloat  = segSwitchStartPosition - panelMargin * 2 - co2ButtonHeight * 2 - co2ButtonMargin * 2 - statusBarHeight
+        let panelStartPosition:CGFloat = co2ButtonHeight * 2 + co2ButtonMargin * 3 + panelMargin + statusBarHeight
         
-        
-        let panelFrame:CGRect = CGRectMake(, <#T##y: CGFloat##CGFloat#>, <#T##width: CGFloat##CGFloat#>, <#T##height: CGFloat##CGFloat#>)
-    
-        let displayPanel: UITextView = UITextView(frame: CGRectMake(10, 50, self.view.frame.width - 20, 500))
-        displayPanel.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 1, alpha: 1.0)
-        displayPanel.text = "1234567890abcdefghijklmnopqrstuwxyz 1234567890 abcdefghijklmnopqrstuwxyz \na\nb\nc\ndefghijklmnopqrstuwxyz \n http://www.gclue.com\n"
-        displayPanel.layer.masksToBounds = true
-        displayPanel.layer.cornerRadius = 20.0
+        let panelFrame:CGRect = CGRectMake(panelMargin, panelStartPosition, panelWidth, panelHeight)
+
+        let displayPanel: UITextView = UITextView(frame:panelFrame)
+        displayPanel.backgroundColor = UIColor.lightGrayColor()
+        displayPanel.text = "1234567890abcdefghijklmnopqrstuwxyz 1234567890 abcdefghijklmnopqrstuwxyz \na\nb\nc\ndefghijklmnopqrstuwxyz"
+        //displayPanel.layer.masksToBounds = true
+        //displayPanel.layer.cornerRadius = 20.0
         //displayPanel.layer.borderWidth = 1
-        displayPanel.layer.borderColor = UIColor.blackColor().CGColor
+        //displayPanel.layer.borderColor = UIColor.blackColor().CGColor
         displayPanel.font = UIFont.systemFontOfSize(CGFloat(20))
         displayPanel.textColor = UIColor.blackColor()
         displayPanel.textAlignment = NSTextAlignment.Left
@@ -177,7 +177,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.view.addSubview(displayPanel)
 
     }
-    */
     
     func decimalPadCreate(){
     
@@ -235,6 +234,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     button.frame = CGRectMake(self.calculateButtonMargin + self.calculateButtonWidth*CGFloat(i) + self.calculateButtonMargin*CGFloat(i),
                         self.calculateButtonStartHeight + self.calculateButtonHeight*CGFloat(h) + self.calculateButtonMargin*CGFloat(h),
                         self.calculateButtonWidth, self.calculateButtonHeight)
+                    
+                    self.displayPanelCreate()
+                    
                 })
             
             }
