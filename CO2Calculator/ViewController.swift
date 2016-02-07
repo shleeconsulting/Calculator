@@ -8,28 +8,6 @@
 
 import UIKit
 
-/*UIButton HighLight
-extension UIButton {
-    private func imageWithColor(color: UIColor) -> UIImage {
-        let rect = CGRectMake(0.0, 0.0, 1.0, 1.0)
-        UIGraphicsBeginImageContext(rect.size)
-        let context = UIGraphicsGetCurrentContext()
-        
-        CGContextSetFillColorWithColor(context, color.CGColor)
-        CGContextFillRect(context, rect)
-        
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return image
-    }
-    
-    func setBackgroundColor(color: UIColor, forUIControlState state: UIControlState) {
-        self.setBackgroundImage(imageWithColor(color), forState: state)
-    }
-}
-*/
-
 class ViewController: UIViewController, UITextFieldDelegate {
     
     var screenHeight: CGFloat!
@@ -58,6 +36,27 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var segSwitchStartPosition:CGFloat!
     var segSwitchMargin:CGFloat!
     
+    var displayPanel:UILabel!
+    var calculatedPanel:UILabel!
+    
+    var isFirstDigit = true
+    var operand1: Double = 0
+    var operation = "="
+    
+    var displayValue: Double {
+        get {
+            //notice use of ! twice in below line. If you get that, then you have truely understood optionals :-)
+            return NSNumberFormatter().numberFromString(displayPanel.text!)!.doubleValue
+        }
+        set {
+            // Notice how we are using a Property Setter to perform additional tasks while
+            //setting value for the property
+            displayPanel.text = "\(newValue)"
+            isFirstDigit = true
+            operation = "="
+        }
+    }
+
     func setupScreenItems(){
         
         screenHeight = UIScreen.mainScreen().bounds.height
@@ -155,27 +154,50 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func displayPanelCreate(){
         
         let panelMargin:CGFloat  = 10.0
-        let panelWidth:CGFloat   = screenWidth - panelMargin * 2.0
-        let panelHeight:CGFloat  = segSwitchStartPosition - panelMargin * 2 - co2ButtonHeight * 2 - co2ButtonMargin * 2 - statusBarHeight
-        let panelStartPosition:CGFloat = co2ButtonHeight * 2 + co2ButtonMargin * 2 + panelMargin + statusBarHeight
-        let panelFrame:CGRect = CGRectMake(panelMargin, panelStartPosition, panelWidth, panelHeight)
-        let panelFont = UIFont(name:"HelveticaNeue-Light",size:panelMargin)
+        let displayPanelWidth:CGFloat   = screenWidth - panelMargin * 2.0
+        let displayPanelHeight:CGFloat  = calculateFontSizeOperator * 2
+        let displayPanelStartPosition:CGFloat = co2ButtonHeight * 2 + co2ButtonMargin * 2 + panelMargin + statusBarHeight
+        let displayPanelFrame:CGRect = CGRectMake(panelMargin, displayPanelStartPosition, displayPanelWidth, displayPanelHeight)
+        let displayPanelFont = UIFont(name:"HelveticaNeue-Light",size:calculateFontSizeOperator)
+        
+        let calculatePanelWidth:CGFloat   = screenWidth - panelMargin * 2.0
+        let calculatePanelHeight:CGFloat  = segSwitchStartPosition - panelMargin * 2 - (displayPanelStartPosition + displayPanelHeight)
+        let calculatePanelStartPosition:CGFloat = statusBarHeight + co2ButtonHeight * 2 + co2ButtonMargin * 2 + panelMargin + displayPanelHeight + panelMargin
+        let calculatePanelFrame:CGRect = CGRectMake(panelMargin, calculatePanelStartPosition, calculatePanelWidth, calculatePanelHeight)
+        let calculatePanelFont = UIFont(name:"HelveticaNeue-Light",size:calculateFontSizeOperator * 2)
 
-        let displayPanel: UILabel = UILabel(frame:panelFrame)
+        displayPanel = UILabel(frame:displayPanelFrame)
         displayPanel.backgroundColor = UIColor.darkGrayColor()
-        displayPanel.text = "1234567890"
-        displayPanel.layer.masksToBounds = true
-        displayPanel.layer.cornerRadius = 10.0
-        displayPanel.font = panelFont
+        displayPanel.text = ""
+        //displayPanel.layer.masksToBounds = true
+        //displayPanel.layer.cornerRadius = 10.0
         displayPanel.layer.borderWidth = 1
         displayPanel.layer.borderColor = UIColor.lightGrayColor().CGColor
-        displayPanel.font = UIFont.systemFontOfSize(CGFloat(20))
+        displayPanel.font = displayPanelFont
         displayPanel.textColor = UIColor.whiteColor()
-        displayPanel.textAlignment = NSTextAlignment.Left
+        displayPanel.textAlignment = NSTextAlignment.Right
+        displayPanel.numberOfLines = 0
+        //displayPanel.sizeToFit()
         //displayPanel.layer.shadowOpacity = 0.5
         self.view.addSubview(displayPanel)
+    
+        calculatedPanel = UILabel(frame:calculatePanelFrame)
+        calculatedPanel.backgroundColor = UIColor.blackColor()
+        calculatedPanel.text = ""
+        //calculatedPanel.layer.masksToBounds = true
+        //calculatedPanel.layer.cornerRadius = 10.0
+        calculatedPanel.font = calculatePanelFont
+        calculatedPanel.layer.borderWidth = 1
+        calculatedPanel.layer.borderColor = UIColor.lightGrayColor().CGColor
+        calculatedPanel.textColor = UIColor.whiteColor()
+        calculatedPanel.textAlignment = NSTextAlignment.Right
+        calculatedPanel.numberOfLines = 1
+        //calculatedPanel.sizeToFit()
+        //calculatedPanel.layer.shadowOpacity = 0.5
+        self.view.addSubview(calculatedPanel)
 
     }
+    
     
     func decimalPadCreate(){
     
@@ -227,6 +249,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 }
                 
                 button.addTarget(self, action: "buttonTouchDown:", forControlEvents:.TouchDown)
+                button.addTarget(self, action: "appendDigit:", forControlEvents:.TouchDown)
                 self.view.addSubview(button)
                 
                 UIView.animateWithDuration(0.1 * Double(i+h*4), animations: { () -> Void in
@@ -235,18 +258,50 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         self.calculateButtonWidth, self.calculateButtonHeight)
                     
                 })
-            
             }
         }
     }
     
-    
-    func buttonTouchDown(sender:UIButton){
-    
+    func appendDigit(sender: UIButton) {
+        
         print("onClickMyButton:")
         print("sender.currentTitile: \(sender.currentTitle)")
         print("sender.tag:\(sender.tag)")
         
+        let digit = sender.currentTitle!
+        //Notice use of ternery operator in below line which results in a single line code
+        //instead of usual if-else multiple lines
+        displayPanel.text = isFirstDigit ? digit : displayPanel.text! + digit
+        isFirstDigit = false
+    }
+    
+    func clearDisplay(sender: AnyObject) {
+     
+        displayValue = 0
+    
+    }
+    
+    func saveOperand(sender: UIButton) {
+        
+        operation = sender.currentTitle!
+        operand1 = displayValue
+        isFirstDigit = true
+    
+    }
+    
+    func calculate(sender: AnyObject) {
+        
+        switch operation {
+            case "÷":displayValue = operand1 / displayValue
+            case "×":displayValue *= operand1
+            case "+":displayValue += operand1
+            case "−":displayValue = operand1 - displayValue
+            default:break
+        }
+    }
+    
+    func buttonTouchDown(sender:UIButton){
+
         let backColor:UIColor = sender.backgroundColor!
         
         UIView.animateWithDuration(0.1, animations: { () -> Void in
